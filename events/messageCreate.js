@@ -26,6 +26,6 @@ module.exports = async function(UnivBot, msg, nmsg) {
 		if(err)
 			console.error(err);
 		else
-			console.log(`SMS Sent: ${sms.sid}`);
+			console.log(`SMS Sent: ${sms.sid}`.replace(/[^\x20-\x7F]/, "?"));
 	});
 }
