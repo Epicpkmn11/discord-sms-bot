@@ -10,7 +10,7 @@ module.exports = async function(UnivBot, msg, nmsg) {
 		return;
 
 	// Don't send our own messages back
-	if(message.webhookId == process.env.WEBHOOK_ID)
+	if(msg.webhookId == process.env.WEBHOOK_ID)
 		return;
 
 	console.log((new Date()).toLocaleString(), msg.author.username, msg.content);
