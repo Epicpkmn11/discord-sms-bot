@@ -9,6 +9,10 @@ module.exports = async function(UnivBot, msg, nmsg) {
 	if(msg.channel.id != process.env.CHANNEL)
 		return;
 
+	// Don't send our own messages back
+	if(message.webhookId == process.env.WEBHOOK_ID)
+		return;
+
 	console.log((new Date()).toLocaleString(), msg.author.username, msg.content);
 
 	// Send SMS
