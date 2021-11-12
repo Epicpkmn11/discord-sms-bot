@@ -10,7 +10,13 @@ Bridges a Discord channel to SMS.
         2. Click `Bot` in the sidebar
         3. Click `Add Bot`
         4. Click `Copy` to copy the token
-    - [Twilio](https://twilio.com)
+    - Sign up for [Twilio](https://twilio.com) and:
+        1. Create an `Account` for this
+        2. The SID and Auth Token are shown on the account home page
+        3. Get a trial phone number and that'll be your Twilio number
+        4. Go to `Phone numbers` -> `Manage` -> `Active numbers` in the sidebar, then click your number
+        5. Scroll down to the `Messaging` category and set `A MESSAGE COMES IN` to `Webhook`, a URL that points to your server, and `HTTP POST`
+        6. The Twilio port can be anything, `4501` is what I'm using so left it as a default, make sure to use this port in the webhook URL
 5. Run `npm start`
 
 ### Running in the background
