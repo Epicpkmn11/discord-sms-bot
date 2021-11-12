@@ -36,7 +36,6 @@ fs.readdir("./events/", (err, files) => {
 // ===========================================================
 const express = require("express");
 var bodyParser = require('body-parser');
-const MessagingResponse = require("twilio").twiml.MessagingResponse;
 
 const app = express();
 app.use(bodyParser.json());
@@ -46,15 +45,11 @@ app.use(bodyParser.urlencoded({
 
 app.post("/sms", (req, res) => {
 	console.log((new Date()).toLocaleString(), req.From, req.body.Body);
+
+	// Send message to Discord
 	SmsBot.client.guilds.fetch(process.env.GUILD).then(guild => guild.channels.fetch(process.env.CHANNEL).then(channel => channel.send(req.body.Body)));
-	const twiml = new MessagingResponse();
-
-	twiml.message("The Robots are coming! Head for the hills!");
-
-	res.writeHead(200, {"Content-Type": "text/xml"});
-	res.end(twiml.toString());
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.TWILIO_PORT, () => {
   console.log(`Express server listening on port ${process.env.TWILIO_PORT}`);
 });
