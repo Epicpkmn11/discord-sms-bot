@@ -20,5 +20,5 @@ Bridges a Discord channel to SMS.
 5. Run `npm start`
 
 ### Running in the background
-6. Install `pm2` with `npm install -g pm2`
-7. Start with `pm2 start sms-bot.js`
+1. Install `pm2` with `npm install -g pm2`
+2. Start with `pm2 start sms-bot.js`
