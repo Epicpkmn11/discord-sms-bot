@@ -15,7 +15,7 @@ module.exports = async function(UnivBot, msg, nmsg) {
 
 	console.log((new Date()).toLocaleString(), msg.author.username, msg.content);
 
-	let nickname = await msg.guild.members.fetch(msg.author.id).then(r => r.nickname);
+	let nickname = msg.webhookId ? undefined : await msg.guild.members.fetch(msg.author.id).then(r => r.nickname);
 
 	// Send SMS
 	twilio.messages.create({
