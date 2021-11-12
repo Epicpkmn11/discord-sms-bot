@@ -19,7 +19,7 @@ module.exports = async function(UnivBot, msg, nmsg) {
 
 	// Send SMS
 	twilio.messages.create({
-		body: `${(nickname ?? msg.author.username)}: ${msg.content}`.replace(/[^\x20-\x7F]/, "?"),
+		body: `${(nickname ?? msg.author.username)}: ${msg.content}`.replace(/[^\x20-\x7F]/g, "?"),
 		to: process.env.SMS_NUMBER,
 		from: process.env.TWILIO_NUMBER,
 	}, (err, sms) => {
