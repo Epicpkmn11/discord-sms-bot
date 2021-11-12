@@ -44,7 +44,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.post("/sms", (req, res) => {
-	console.log((new Date()).toLocaleString(), req.From, req.body.Body);
+	console.log((new Date()).toLocaleString(), req.body.From, req.body.Body);
 
 	// Send message to Discord
 	SmsBot.webhook.send(req.body.Body);
