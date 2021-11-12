@@ -47,7 +47,10 @@ app.post("/sms", (req, res) => {
 	console.log((new Date()).toLocaleString(), req.body.From, req.body.Body);
 
 	// Send message to Discord
-	SmsBot.webhook.send(req.body.Body);
+	if(req.body.Body)
+		SmsBot.webhook.send(req.body.Body);
+
+	res.end();
 });
 
 app.listen(process.env.TWILIO_PORT, () => {
