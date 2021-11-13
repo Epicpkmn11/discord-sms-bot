@@ -35,7 +35,8 @@ fs.readdir("./events/", (err, files) => {
 // Twilio
 // ===========================================================
 const express = require("express");
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
+const MessagingResponse = require("twilio").twiml.MessagingResponse;
 
 const app = express();
 app.use(bodyParser.json());
