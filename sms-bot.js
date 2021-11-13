@@ -50,7 +50,10 @@ app.post("/sms", (req, res) => {
 	if(req.body.Body)
 		SmsBot.webhook.send(req.body.Body);
 
-	res.end();
+	// Respond to end the request
+	const twiml = new MessagingResponse();
+	res.writeHead(200, {"Content-Type": "text/xml"});
+	res.end(twiml.toString());
 });
 
 app.listen(process.env.TWILIO_PORT, () => {
