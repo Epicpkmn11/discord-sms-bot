@@ -53,8 +53,10 @@ app.post("/sms", (req, res) => {
 	// Send message to Discord
 	if(req.body.Body) {
 		for(let bridge of SmsBot.config.bridges) {
-			SmsBot.webhooks[bridge.webhook_id].send(req.body.Body);
-			break;
+			if(bridge.twilio_number == req.body.To) {
+				SmsBot.webhooks[bridge.webhook_id].send(req.body.Body);
+				break;
+			}
 		}
 	}
 
