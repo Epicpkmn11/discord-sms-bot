@@ -1,0 +1,20 @@
+{
+	"comment": "The token for your Discord bot",
+	"token": "########################.######.###########################",
+
+	"comment_2": "Your Twilio account info, port is the port to listen for webhooks on",
+	"twilio_sid": "##################################",
+	"twilio_token": "################################",
+	"twilio_port": "4501",
+	
+	"comment_3": "You need 1 of these per channel to sync, each must have either a unique SMS or Twilio number",
+	"bridges": [
+		{
+			"twilio_number": "+1##########",
+			"sms_number": "+1##########",
+			"channel": "##################",
+			"webhook_id": "##################",
+			"webhook_token": "####################################################################"
+		}
+	]
+}

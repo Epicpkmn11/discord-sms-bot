@@ -4,7 +4,7 @@ Bridges a Discord channel to SMS.
 ## Running it yourself
 1. Install [Node.js](https://nodejs.org)
 2. Run `npm install`
-3. Copy `sample.env` to `.env` and fill in the info
+3. Copy `config.sample.json` to `config.json` and fill in the info
     - You can make a bot at the [Discord Developer Portal](https://discord.com/developers/applications)
         1. Click `New Application` in the top right
         2. Click `Bot` in the sidebar

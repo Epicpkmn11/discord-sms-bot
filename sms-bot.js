@@ -5,19 +5,22 @@
 // ===========================================================
 const fs = require("fs");
 const { Client, Intents, WebhookClient } = require("discord.js");
-require("dotenv").config();
 
 // ===========================================================
 // Client
 // ===========================================================
 const SmsBot = {
+	config: require("./config.json"),
 	client: new Client({
-		intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES],
+		intents: [Intents.FLAGS.GUILD_MESSAGES],
 		allowedMentions: { parse: [], repliedUser: false }
 	}),
-	webhook: new WebhookClient({ id: process.env.WEBHOOK_ID, token: process.env.WEBHOOK_TOKEN })
+	webhooks: {}
 };
-SmsBot.client.login(process.env.TOKEN);
+SmsBot.client.login(SmsBot.config.token);
+for(let bridge of SmsBot.config.bridges) {
+	SmsBot.webhooks[bridge.webhook_id] = new WebhookClient({ id: bridge.webhook_id, token: bridge.webhook_token });
+}
 
 // ===========================================================
 // Handle the events
@@ -48,8 +51,12 @@ app.post("/sms", (req, res) => {
 	console.log((new Date()).toLocaleString(), req.body.From, req.body.Body);
 
 	// Send message to Discord
-	if(req.body.Body)
-		SmsBot.webhook.send(req.body.Body);
+	if(req.body.Body) {
+		for(let bridge of SmsBot.config.bridges) {
+			SmsBot.webhooks[bridge.webhook_id].send(req.body.Body);
+			break;
+		}
+	}
 
 	// Respond to end the request
 	const twiml = new MessagingResponse();
@@ -57,6 +64,6 @@ app.post("/sms", (req, res) => {
 	res.end(twiml.toString());
 });
 
-app.listen(process.env.TWILIO_PORT, () => {
-	console.log(`Express server listening on port ${process.env.TWILIO_PORT}`);
+app.listen(SmsBot.config.twilio_port, () => {
+	console.log(`Express server listening on port ${SmsBot.config.twilio_port}`);
 });
