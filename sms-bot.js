@@ -12,12 +12,12 @@ const { Client, Intents, WebhookClient } = require("discord.js");
 const SmsBot = {
 	config: require("./config.json"),
 	client: new Client({
-		intents: [Intents.FLAGS.GUILD_MESSAGES],
+		intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 		allowedMentions: { parse: [], repliedUser: false }
 	}),
 	webhooks: {}
 };
-SmsBot.client.login(SmsBot.config.token);
+SmsBot.client.login(SmsBot.config.bot_token);
 for(let bridge of SmsBot.config.bridges) {
 	SmsBot.webhooks[bridge.webhook_id] = new WebhookClient({ id: bridge.webhook_id, token: bridge.webhook_token });
 }

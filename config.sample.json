@@ -1,18 +1,23 @@
 {
 	"comment": "The token for your Discord bot",
-	"token": "########################.######.###########################",
+	"bot_token": "########################.######.###########################",
 
-	"comment_2": "Your Twilio account info, port is the port to listen for webhooks on",
-	"twilio_sid": "##################################",
-	"twilio_token": "################################",
+	"comment_2": "The port to listen for the Twilio webhook on",
 	"twilio_port": "4501",
 	
 	"comment_3": "You need 1 of these per channel to sync, each must have either a unique SMS or Twilio number",
 	"bridges": [
 		{
+			"comment": "The Twilio SID and Token can be shared between multiple if you have a paid account with multiple numbers, trial accounts can only have one so each channel needs an account",
 			"twilio_number": "+1##########",
+			"twilio_sid": "##################################",
+			"twilio_token": "################################",
+
+			"comment_2": "The number to send to",
 			"sms_number": "+1##########",
-			"channel": "##################",
+
+			"comment_3": "The Discord channel and webhook info",
+			"channel_id": "##################",
 			"webhook_id": "##################",
 			"webhook_token": "####################################################################"
 		}
