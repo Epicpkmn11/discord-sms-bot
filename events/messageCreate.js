@@ -20,7 +20,7 @@ module.exports = async function(SmsBot, msg, nmsg) {
 		// Send SMS
 		const twilio = require("twilio")(bridge.twilio_sid, bridge.twilio_token);
 		twilio.messages.create({
-			body: `${(nickname ?? msg.author.username)}: ${msg.content}`.replace(/[^\x20-\x7F]/g, "?"),
+			body: `${(nickname ?? msg.author.username)}: ${msg.content}`.replace(/[^\x20-\x7F\x0A\x0D]/g, "?"),
 			to: bridge.sms_number,
 			from: bridge.twilio_number,
 		}, (err, sms) => {
