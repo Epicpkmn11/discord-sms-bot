@@ -63,7 +63,7 @@ app.post("/sms", async (req, res) => {
 				for(let i = 0; i < req.body.NumMedia; i++) {
 					attachments.push({
 						attachment: await (await fetch(req.body[`MediaUrl${i}`])).buffer(),
-						name: `${basename(new URL(body[`MediaUrl${i}`]).pathname)}.${mime(req.body[`MediaContentType${i}`])[0].ext}`
+						name: `${basename(new URL(req.body[`MediaUrl${i}`]).pathname)}.${mime(req.body[`MediaContentType${i}`])[0].ext}`
 					});
 				}
 
