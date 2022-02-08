@@ -23,6 +23,7 @@ module.exports = async function(SmsBot, msg, nmsg) {
 			body: `${(nickname ?? msg.author.username)}: ${msg.content}`.replace(/[^\x20-\x7F\x0A\x0D]/g, "?"),
 			to: bridge.sms_number,
 			from: bridge.twilio_number,
+			mediaUrl: msg.attachments.find(r => r.contentType.startsWith("image/"))?.url
 		}, (err, sms) => {
 			if(err)
 				console.error(err);

@@ -4,6 +4,10 @@
 // Setup variables
 // ===========================================================
 const fs = require("fs");
+const fetch = require("node-fetch");
+const { mime } = require("ext-name");
+const { basename } = require("path");
+const { URL } = require("url");
 const { Client, Intents, WebhookClient } = require("discord.js");
 
 // ===========================================================
@@ -38,7 +42,7 @@ fs.readdir("./events/", (err, files) => {
 // Twilio
 // ===========================================================
 const express = require("express");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
 
 const app = express();
@@ -47,14 +51,23 @@ app.use(bodyParser.urlencoded({
 	extended: true
 }));
 
-app.post("/sms", (req, res) => {
+app.post("/sms", async (req, res) => {
 	console.log((new Date()).toLocaleString(), req.body.From, req.body.Body);
 
 	// Send message to Discord
 	if(req.body.Body) {
 		for(let bridge of SmsBot.config.bridges) {
 			if(bridge.twilio_number == req.body.To) {
-				SmsBot.webhooks[bridge.webhook_id].send(req.body.Body);
+				let attachments = [];
+
+				for(let i = 0; i < req.body.NumMedia; i++) {
+					attachments.push({
+						attachment: await (await fetch(req.body[`MediaUrl${i}`])).buffer(),
+						name: `${basename(new URL(body[`MediaUrl${i}`]).pathname)}.${mime(req.body[`MediaContentType${i}`])[0].ext}`
+					});
+				}
+
+				SmsBot.webhooks[bridge.webhook_id].send({content: req.body.Body, files: attachments});
 				break;
 			}
 		}
