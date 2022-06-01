@@ -17,13 +17,22 @@ module.exports = async function(SmsBot, msg, nmsg) {
 
 		let nickname = msg.webhookId ? undefined : await msg.guild.members.fetch(msg.author.id).then(r => r.nickname);
 
+		let body = `${(nickname ?? msg.author.username)}: ${msg.content}`.replace(/[^\x20-\x7F\x0A\x0D]/g, "?");
+		let attachment = msg.attachments.find(r => r.contentType?.startsWith("image/"))?.url;
+		let attachmentLinks = msg.attachments
+				.filter(r => !r.contentType?.startsWith("image/"))
+				.map(r => r.attachment)
+				.join("\n");
+		if(attachmentLinks)
+			body += "\n\n" + attachmentLinks;
+
 		// Send SMS
 		const twilio = require("twilio")(bridge.twilio_sid, bridge.twilio_token);
 		twilio.messages.create({
-			body: `${(nickname ?? msg.author.username)}: ${msg.content}`.replace(/[^\x20-\x7F\x0A\x0D]/g, "?"),
+			body: body,
 			to: bridge.sms_number,
 			from: bridge.twilio_number,
-			mediaUrl: msg.attachments.find(r => r.contentType.startsWith("image/"))?.url
+			mediaUrl: attachment
 		}, (err, sms) => {
 			if(err)
 				console.error(err);
