@@ -4,8 +4,11 @@
 
 	"comment_2": "The port to listen for the Twilio webhook on",
 	"twilio_port": "4501",
-	
-	"comment_3": "You need 1 of these per channel to sync, each must have either a unique SMS or Twilio number",
+
+	"comment_3": "Options for how the bot will run:",
+	"mms_images": true,
+
+	"comment_4": "You need 1 of these per channel to sync, each must have either a unique SMS or Twilio number",
 	"bridges": [
 		{
 			"comment": "The Twilio SID and Token can be shared between multiple if you have a paid account with multiple numbers, trial accounts can only have one so each channel needs an account",
